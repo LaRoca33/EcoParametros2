@@ -7,6 +7,7 @@ public class Colecciones {
     private static final HashMap<String, String> generos = new HashMap<>();
     private static final HashMap<String, String> paises = new HashMap<>();
     private static final HashMap<String, String> musica = new HashMap<>();
+    private static final HashMap<String, String> aficiones = new HashMap<>();
 
 
     static {
@@ -22,10 +23,17 @@ public class Colecciones {
         paises.put("P", "Portugal");
 
 
-        musica.put("B", "Blues");
+        musica.put("E", "Electrónica");
+        musica.put("F", "Funky");
+        musica.put("N", "New age");
+        musica.put("P", "Pop");
         musica.put("R", "Rock");
-        musica.put("C", "Musica clasica");
-        musica.put("H", "Hardstyle");
+
+
+        aficiones.put("D","Deporte");
+        aficiones.put("L","Lectura");
+        aficiones.put("P","Pintura");
+        aficiones.put("V","Viajes");
     }
 
 
@@ -37,7 +45,11 @@ public class Colecciones {
         return paises;
     }
 
-    public static HashMap<String, String> getMusica() {
+    public static HashMap<String, String> getMusicas() {
         return musica;
+    }
+
+    public static HashMap<String, String> getAficiones() {
+        return aficiones;
     }
 }
