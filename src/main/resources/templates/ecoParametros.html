@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario</title>
+</head>
+<body>
+<form method="get" action="recibe-parametros">
+  <fieldset>
+    <legend>Form</legend>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" th:value="${nombre}" >
+    <br><br>
+
+    <!-- Campo de contraseña -->
+    <label for="contrasena">Contraseña:</label>
+    <input type="password" id="contrasena" name="clave" th:value="${clave}">
+    <br><br>
+
+    <!-- Campo de selección -->
+    <label for="pais">País:</label>
+    <select  name="paisSel" id="paisSel">
+      <option th:each="pais:${paises}"  th:value="${pais.key}" th:text="${pais.value}">
+
+      </option>
+    </select>
+    <br><br>
+
+    <!-- Botones de radio -->
+    <label>Género:</label>
+    <input type="radio" id="masculino" th:each="genero:${generos}" th:text="${genero.value}" th:value="${genero.key}">
+    <br><br>
+
+    <table>
+
+    </table>
+
+    <!-- Casillas de verificación -->
+    <label>Intereses:</label>
+    <input type="checkbox" id="deportes" name="intereses" value="deportes">
+    <label for="deportes">Deportes</label>
+
+    <input type="checkbox" id="musica" name="intereses" value="musica">
+    <label for="musica">Música</label>
+
+    <input type="checkbox" id="lectura" name="intereses" value="lectura">
+    <label for="lectura">Lectura</label>
+    <br><br>
+
+    <!-- Área de texto -->
+    <label for="comentarios">Comentarios:</label>
+    <textarea id="comentarios" name="comentarios" th:text="${comentarios}" rows="4" cols="50"></textarea>
+    <br><br>
+
+    <!-- Botón de envío -->
+    <input type="submit" value="Enviar">
+  </fieldset>
+</form>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario</title>
+</head>
+<body>
+    <form method="get" action="imprime-parametros">
+    <fieldset>
+        <legend>Form</legend>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre">
+        <br><br>
+
+        <!-- Campo de contraseña -->
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" name="clave" >
+        <br><br>
+
+        <!-- Campo de selección -->
+        <label for="pais">País:</label>
+        <select id="pais" name="pais">
+            <option value="mx">México</option>
+            <option value="es">España</option>
+            <option value="us">Estados Unidos</option>
+            <option value="ar">Argentina</option>
+        </select>
+        <br><br>
+
+        <!-- Botones de radio -->
+        <label>Género:</label>
+        <input type="radio" id="masculino" name="genero" value="masculino">
+        <label for="masculino">Masculino</label>
+
+        <input type="radio" id="femenino" name="genero" value="femenino">
+        <label for="femenino">Femenino</label>
+
+        <input type="radio" id="otro" name="genero" value="otro">
+        <label for="otro">Otro</label>
+        <br><br>
+
+        <!-- Casillas de verificación -->
+        <label>Intereses:</label>
+        <input type="checkbox" id="deportes" name="intereses" value="deportes">
+        <label for="deportes">Deportes</label>
+
+        <input type="checkbox" id="musica" name="intereses" value="musica">
+        <label for="musica">Música</label>
+
+        <input type="checkbox" id="lectura" name="intereses" value="lectura">
+        <label for="lectura">Lectura</label>
+        <br><br>
+
+        <!-- Área de texto -->
+        <label for="comentarios">Comentarios:</label>
+        <textarea id="comentarios" name="comentarios" rows="4" cols="50"></textarea>
+        <br><br>
+
+        <!-- Botón de envío -->
+        <input type="submit" value="Enviar">
+    </fieldset>
+    </form>
+</body>
+</html>
