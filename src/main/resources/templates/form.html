@@ -6,7 +6,8 @@
 </head>
 <body>
     <h1 th:text="${titulo}"></h1> <!-- Título que muestra si es Original o Repintado -->
-
+    <!-- Mostrar iteraciones -->
+    <p th:text="'Iteración: ' + ${iteraciones}"></p>
 <form method="post" action="recibe-parametros">
     <fieldset>
         <legend>Formulario</legend>
@@ -18,7 +19,7 @@
         <label for="contrasena">Contraseña:</label>
         <input type="password" id="clave" name="clave" th:value="${clave}">
         <br><br>
-        <input type="hidden" id="iteraciones" name="iteraciones">
+        <input type="hidden" id="iteraciones" name="iteraciones" th:value="${iteraciones}">
 
         <!-- Botones de radio -->
         <label>Género:</label>

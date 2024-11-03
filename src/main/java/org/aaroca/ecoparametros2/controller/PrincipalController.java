@@ -37,8 +37,8 @@ public class PrincipalController extends Colecciones{
     }
     @GetMapping("devuelve-formulario")
     public String form(Model modelo) {
-
         modelo.addAttribute("titulo", "Original"); // Se pasa el título "Original" en el primer renderizado
+        modelo.addAttribute("iteraciones", 1);  // Inicializamos iteraciones en 1
         return "form";
     }
     @PostMapping("recibe-parametros")
@@ -50,8 +50,13 @@ public class PrincipalController extends Colecciones{
             @RequestParam(required = false) String pais_seleccionado,
             @RequestParam(required = false) ArrayList<String> musicas_seleccionadas,
             @RequestParam(required = false) String comentarios,
+            @RequestParam(required = false, defaultValue = "1") int iteraciones,
             Model modelo
     ) {
+        // Incrementar el contador de iteraciones
+        iteraciones++;
+        modelo.addAttribute("iteraciones", iteraciones);
+
         // Agregar atributos seleccionados al modelo
         modelo.addAttribute("usuario", usuario);
         modelo.addAttribute("clave", clave);
