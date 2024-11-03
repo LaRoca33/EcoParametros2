@@ -5,6 +5,7 @@ import org.aaroca.ecoparametros2.model.DatosFormulario;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -50,23 +51,17 @@ public class PrincipalController extends Colecciones{
             @RequestParam(required = false) String pais_seleccionado,
             @RequestParam(required = false) ArrayList<String> musicas_seleccionadas,
             @RequestParam(required = false) String comentarios,
-            @RequestParam(required = false, defaultValue = "1") int iteraciones,
+            @RequestParam(required = false) MultipartFile archivo, // Campo de archivo
+            @RequestParam(required = false, defaultValue = "1") int iteraciones, // Campo de iteración
             Model modelo
     ) {
-        // Incrementar el contador de iteraciones
-        iteraciones++;
-        modelo.addAttribute("iteraciones", iteraciones);
+        // Añadir colecciones para listas desplegables y opciones del formulario
+        modelo.addAttribute("generos", Colecciones.getGeneros());
+        modelo.addAttribute("paises", Colecciones.getPaises());
+        modelo.addAttribute("aficiones", Colecciones.getAficiones());
+        modelo.addAttribute("musicas", Colecciones.getMusicas());
 
-        int contadorParametrosRecibidos = 0;
-        if (usuario != null) contadorParametrosRecibidos++;
-        if (clave != null) contadorParametrosRecibidos++;
-        if (aficiones_seleccionadas != null && !aficiones_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
-        if (genero_seleccionado != null) contadorParametrosRecibidos++;
-        if (pais_seleccionado != null) contadorParametrosRecibidos++;
-        if (musicas_seleccionadas != null && !musicas_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
-        if (comentarios != null) contadorParametrosRecibidos++;
-
-        // Agregar atributos seleccionados al modelo
+        // Agregar valores de los campos al modelo para repintado
         modelo.addAttribute("usuario", usuario);
         modelo.addAttribute("clave", clave);
         modelo.addAttribute("aficionesSeleccionadas", aficiones_seleccionadas);
@@ -75,11 +70,31 @@ public class PrincipalController extends Colecciones{
         modelo.addAttribute("musicasSeleccionadas", musicas_seleccionadas);
         modelo.addAttribute("comentarios", comentarios);
 
-        modelo.addAttribute("contadorParametrosRecibidos", contadorParametrosRecibidos);
-        // Cambiar el título para indicar que es el formulario repintado
-        modelo.addAttribute("titulo", "Repintado");
+        // Procesar el archivo
+        if (archivo != null && !archivo.isEmpty()) {
+            String nombreArchivo = archivo.getOriginalFilename();
+            modelo.addAttribute("nombreArchivo", nombreArchivo);
+        } else {
+            modelo.addAttribute("nombreArchivo", "No se ha seleccionado ningún archivo");
+        }
 
-        return "form";
+        // Contar los parámetros recibidos (excluyendo los nulos)
+        int contadorParametrosRecibidos = 0;
+        if (usuario != null) contadorParametrosRecibidos++;
+        if (clave != null) contadorParametrosRecibidos++;
+        if (aficiones_seleccionadas != null && !aficiones_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
+        if (genero_seleccionado != null) contadorParametrosRecibidos++;
+        if (pais_seleccionado != null) contadorParametrosRecibidos++;
+        if (musicas_seleccionadas != null && !musicas_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
+        if (comentarios != null) contadorParametrosRecibidos++;
+        if (archivo != null && !archivo.isEmpty()) contadorParametrosRecibidos++; // Contar archivo si fue enviado
+
+        modelo.addAttribute("contadorParametrosRecibidos", contadorParametrosRecibidos);
+        modelo.addAttribute("titulo", "Repintado");
+        // Incrementar el contador de iteraciones
+        modelo.addAttribute("iteraciones", iteraciones + 1);
+
+        return "form"; // Asegúrate de que esta vista coincide con el nombre del archivo HTML
     }
 
     //Redirigir las Solicitudes a favicon.ico a un Recurso Vacio
