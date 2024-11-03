@@ -82,4 +82,11 @@ public class PrincipalController extends Colecciones{
         return "form";
     }
 
+    //Redirigir las Solicitudes a favicon.ico a un Recurso Vacio
+    @GetMapping("favicon.ico")
+    @ResponseBody
+    public void returnNoFavicon() {
+        // No hace nada, devuelve una respuesta vacía
+    }
+
 }
