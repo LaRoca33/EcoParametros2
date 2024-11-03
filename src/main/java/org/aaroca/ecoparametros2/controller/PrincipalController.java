@@ -11,7 +11,15 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("formulario")
-public class PrincipalController {
+public class PrincipalController extends Colecciones{
+    @ModelAttribute("musicas")
+    private Map<String,String> devuelveListaMusicas(){return Colecciones.getMusicas();}
+    @ModelAttribute("paises")
+    private Map<String,String> devuelveListaPaises(){return Colecciones.getPaises();}
+    @ModelAttribute("generos")
+    private Map<String,String> devuelveListaGeneros(){return Colecciones.getGeneros();}
+    @ModelAttribute("aficiones")
+    private Map<String,String> devuelveListaAficiones(){return Colecciones.getAficiones();}
 
     @GetMapping("hola-mundo")
     @ResponseBody
@@ -29,31 +37,34 @@ public class PrincipalController {
     }
     @GetMapping("devuelve-formulario")
     public String form(Model modelo) {
-        modelo.addAttribute("generos",Colecciones.getGeneros());
-        modelo.addAttribute("paises", Colecciones.getPaises());
-        modelo.addAttribute("aficiones", Colecciones.getAficiones());
-        modelo.addAttribute("musicas", Colecciones.getMusicas());
+
+        modelo.addAttribute("titulo", "Original"); // Se pasa el título "Original" en el primer renderizado
         return "form";
     }
     @PostMapping("recibe-parametros")
     public String recibeParams(
-            @RequestParam(required = false)String  usuario,
-            @RequestParam(required = false)String  clave,
-            @RequestParam(required = false) ArrayList<String> aficiones,
-            @RequestParam(required = false)String  genero,
-            @RequestParam(required = false)String  comentarios,
+            @RequestParam(required = false) String usuario,
+            @RequestParam(required = false) String clave,
+            @RequestParam(required = false) ArrayList<String> aficiones_seleccionadas,
+            @RequestParam(required = false) String genero_seleccionado,
+            @RequestParam(required = false) String pais_seleccionado,
+            @RequestParam(required = false) ArrayList<String> musicas_seleccionadas,
+            @RequestParam(required = false) String comentarios,
             Model modelo
-            ) {
-        modelo.addAttribute("generos",Colecciones.getGeneros());
-        modelo.addAttribute("paises", Colecciones.getPaises());
-        modelo.addAttribute("aficiones", Colecciones.getAficiones());
-        modelo.addAttribute("musicas", Colecciones.getMusicas());
-      //  modelo.addAttribute("paises",paises);
-        modelo.addAttribute("usuario",usuario);
-        modelo.addAttribute("clave",clave);
-      //  modelo.addAttribute("aficiones",aficiones);
-        modelo.addAttribute("genero",genero);
-        modelo.addAttribute("comentarios",comentarios);
+    ) {
+        // Agregar atributos seleccionados al modelo
+        modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("clave", clave);
+        modelo.addAttribute("aficionesSeleccionadas", aficiones_seleccionadas);
+        modelo.addAttribute("generoSeleccionado", genero_seleccionado);
+        modelo.addAttribute("paisSeleccionado", pais_seleccionado);
+        modelo.addAttribute("musicasSeleccionadas", musicas_seleccionadas);
+        modelo.addAttribute("comentarios", comentarios);
+
+        // Cambiar el título para indicar que es el formulario repintado
+        modelo.addAttribute("titulo", "Repintado");
+
         return "form";
     }
+
 }

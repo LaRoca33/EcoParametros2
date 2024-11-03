@@ -5,7 +5,9 @@
     <title>Formulario</title>
 </head>
 <body>
-    <form method="post" action="recibe-parametros">
+    <h1 th:text="${titulo}"></h1> <!-- Título que muestra si es Original o Repintado -->
+
+<form method="post" action="recibe-parametros">
     <fieldset>
         <legend>Formulario</legend>
         <label for="nombre">Nombre:</label>
@@ -20,18 +22,29 @@
 
         <!-- Botones de radio -->
         <label>Género:</label>
-        <input type="radio" id="masculino" th:each="genero:${generos}" th:text="${genero.value}" th:value="${genero.key}">
+        <input type="radio" id="masculino" name="genero_seleccionado"
+               th:each="genero:${generos}"
+               th:text="${genero.value}"
+               th:value="${genero.key}"
+               th:checked="${genero.key == generoSeleccionado}">
         <br><br>
 
         <!-- Casillas de verificación -->
         <label>Aficiones:</label>
-        <input type="checkbox" name="aficiones" th:each="aficion:${aficiones}" th:text="${aficion.value}" th:value="${aficion.key}">
+        <input type="checkbox" name="aficiones_seleccionadas"
+               th:each="aficion:${aficiones}"
+               th:text="${aficion.value}"
+               th:value="${aficion.key}"
+               th:checked="${aficionesSeleccionadas != null && aficionesSeleccionadas.contains(aficion.key)}">
 
         <br><br>
 
         <label for="pais">País:</label>
-        <select  name="paisSel" id="paisSel">
-            <option th:each="pais:${paises}"  th:value="${pais.key}" th:text="${pais.value}">
+        <select  name="pais_seleccionado" id="pais_seleccionado">
+            <option th:each="pais:${paises}"
+                    th:value="${pais.key}"
+                    th:text="${pais.value}"
+                    th:selected="${pais.key == paisSeleccionado}?selected">
 
             </option>
         </select>
@@ -39,8 +52,11 @@
         <br><br>
 
         <label for="musicas">Musicas:</label>
-        <select multiple="multiple"  name="musicasSel" id="musicasSel">
-            <option th:each="musica:${musicas}"  th:value="${musica.key}" th:text="${musica.value}">
+        <select multiple="multiple"  name="musicas_seleccionadas" id="musicas_seleccionadas">
+            <option th:each="musica:${musicas}"
+                    th:value="${musica.key}"
+                    th:text="${musica.value}"
+                    th:selected="${musicasSeleccionadas != null && musicasSeleccionadas.contains(musica.key)}">
 
             </option>
         </select>
@@ -53,6 +69,7 @@
 
         <!-- Botón de envío -->
         <input type="submit" value="Enviar">
+        <input type="reset" value="Reseteo">
     </fieldset>
     </form>
 </body>
