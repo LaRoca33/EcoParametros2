@@ -57,6 +57,15 @@ public class PrincipalController extends Colecciones{
         iteraciones++;
         modelo.addAttribute("iteraciones", iteraciones);
 
+        int contadorParametrosRecibidos = 0;
+        if (usuario != null) contadorParametrosRecibidos++;
+        if (clave != null) contadorParametrosRecibidos++;
+        if (aficiones_seleccionadas != null && !aficiones_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
+        if (genero_seleccionado != null) contadorParametrosRecibidos++;
+        if (pais_seleccionado != null) contadorParametrosRecibidos++;
+        if (musicas_seleccionadas != null && !musicas_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
+        if (comentarios != null) contadorParametrosRecibidos++;
+
         // Agregar atributos seleccionados al modelo
         modelo.addAttribute("usuario", usuario);
         modelo.addAttribute("clave", clave);
@@ -66,6 +75,7 @@ public class PrincipalController extends Colecciones{
         modelo.addAttribute("musicasSeleccionadas", musicas_seleccionadas);
         modelo.addAttribute("comentarios", comentarios);
 
+        modelo.addAttribute("contadorParametrosRecibidos", contadorParametrosRecibidos);
         // Cambiar el título para indicar que es el formulario repintado
         modelo.addAttribute("titulo", "Repintado");
 
