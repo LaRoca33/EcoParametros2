@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 @Controller
@@ -38,6 +39,12 @@ public class PrincipalController extends Colecciones{
     }
     @GetMapping("devuelve-formulario")
     public String form(Model modelo) {
+
+        modelo.addAttribute("usuario", "Pepe"); // Valor por defecto para el usuario
+        modelo.addAttribute("aficionesSeleccionadas", new ArrayList<>(Arrays.asList("D", "P", "V"))); // Valores por defecto para aficiones
+        modelo.addAttribute("paisSeleccionado", "F"); // Valor por defecto para país
+        modelo.addAttribute("musicasSeleccionadas", new ArrayList<>(Arrays.asList("F", "R"))); // Valores por defecto para músicas
+
         modelo.addAttribute("titulo", "Original"); // Se pasa el título "Original" en el primer renderizado
         modelo.addAttribute("iteraciones", 1);  // Inicializamos iteraciones en 1
         return "form";
@@ -55,11 +62,6 @@ public class PrincipalController extends Colecciones{
             @RequestParam(required = false, defaultValue = "1") int iteraciones, // Campo de iteración
             Model modelo
     ) {
-        // Añadir colecciones para listas desplegables y opciones del formulario
-        modelo.addAttribute("generos", Colecciones.getGeneros());
-        modelo.addAttribute("paises", Colecciones.getPaises());
-        modelo.addAttribute("aficiones", Colecciones.getAficiones());
-        modelo.addAttribute("musicas", Colecciones.getMusicas());
 
         // Agregar valores de los campos al modelo para repintado
         modelo.addAttribute("usuario", usuario);
