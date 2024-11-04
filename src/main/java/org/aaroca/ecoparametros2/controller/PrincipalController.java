@@ -12,43 +12,60 @@ import java.util.Arrays;
 import java.util.Map;
 
 @Controller
-@RequestMapping("formulario")
-public class PrincipalController extends Colecciones{
-    @ModelAttribute("musicas")
-    private Map<String,String> devuelveListaMusicas(){return Colecciones.getMusicas();}
-    @ModelAttribute("paises")
-    private Map<String,String> devuelveListaPaises(){return Colecciones.getPaises();}
-    @ModelAttribute("generos")
-    private Map<String,String> devuelveListaGeneros(){return Colecciones.getGeneros();}
-    @ModelAttribute("aficiones")
-    private Map<String,String> devuelveListaAficiones(){return Colecciones.getAficiones();}
+@RequestMapping("formulario") // Define la URL base /formulario para los métodos de este controlador
+public class PrincipalController extends Colecciones {
 
+    // Carga un mapa de opciones de música en el modelo
+    @ModelAttribute("musicas")
+    private Map<String, String> devuelveListaMusicas() {
+        return Colecciones.getMusicas();
+    }
+
+    // Carga un mapa de opciones de países en el modelo
+    @ModelAttribute("paises")
+    private Map<String, String> devuelveListaPaises() {
+        return Colecciones.getPaises();
+    }
+
+    // Carga un mapa de opciones de géneros en el modelo
+    @ModelAttribute("generos")
+    private Map<String, String> devuelveListaGeneros() {
+        return Colecciones.getGeneros();
+    }
+
+    // Carga un mapa de opciones de aficiones en el modelo
+    @ModelAttribute("aficiones")
+    private Map<String, String> devuelveListaAficiones() {
+        return Colecciones.getAficiones();
+    }
+
+    // Método de prueba que devuelve "Hola mundo" en texto
     @GetMapping("hola-mundo")
     @ResponseBody
     public String holaMundo() {
         return "Hola mundo";
     }
 
-
-
-
+    // Método para mostrar todos los parámetros recibidos en la URL
     @GetMapping("imprime-parametros")
     @ResponseBody
-    public String formPost(@RequestParam Map<String,String> allParams) {
-        return "Parametros: "+allParams.entrySet();
+    public String formPost(@RequestParam Map<String, String> allParams) {
+        return "Parametros: " + allParams.entrySet();
     }
+
+    // Renderiza el formulario y carga valores por defecto en el modelo
     @GetMapping("devuelve-formulario")
     public String form(Model modelo) {
-
-        modelo.addAttribute("usuario", "Pepe"); // Valor por defecto para el usuario
-        modelo.addAttribute("aficionesSeleccionadas", new ArrayList<>(Arrays.asList("D", "P", "V"))); // Valores por defecto para aficiones
-        modelo.addAttribute("paisSeleccionado", "F"); // Valor por defecto para país
-        modelo.addAttribute("musicasSeleccionadas", new ArrayList<>(Arrays.asList("F", "R"))); // Valores por defecto para músicas
-
-        modelo.addAttribute("titulo", "Original"); // Se pasa el título "Original" en el primer renderizado
-        modelo.addAttribute("iteraciones", 1);  // Inicializamos iteraciones en 1
-        return "form";
+        modelo.addAttribute("usuario", "Pepe"); // Valor inicial para el campo usuario
+        modelo.addAttribute("aficionesSeleccionadas", new ArrayList<>(Arrays.asList("D", "P", "V"))); // Valores iniciales de aficiones
+        modelo.addAttribute("paisSeleccionado", "F"); // Valor inicial para país
+        modelo.addAttribute("musicasSeleccionadas", new ArrayList<>(Arrays.asList("F", "R"))); // Valores iniciales de música
+        modelo.addAttribute("titulo", "Original"); // Texto inicial del título
+        modelo.addAttribute("iteraciones", 1);  // Inicialización de contador de iteraciones
+        return "form"; // Retorna la vista form.html para renderizar
     }
+
+    // Recibe y procesa parámetros enviados desde el formulario
     @PostMapping("recibe-parametros")
     public String recibeParams(
             @RequestParam(required = false) String usuario,
@@ -58,12 +75,12 @@ public class PrincipalController extends Colecciones{
             @RequestParam(required = false) String pais_seleccionado,
             @RequestParam(required = false) ArrayList<String> musicas_seleccionadas,
             @RequestParam(required = false) String comentarios,
-            @RequestParam(required = false) MultipartFile archivo, // Campo de archivo
-            @RequestParam(required = false, defaultValue = "1") int iteraciones, // Campo de iteración
+            @RequestParam(required = false) String archivo, // Campo de archivo
+            @RequestParam(required = false, defaultValue = "1") int iteraciones, // Valor predeterminado para iteración
             Model modelo
     ) {
 
-        // Agregar valores de los campos al modelo para repintado
+        // Agregar campos recibidos al modelo para repintado en la vista
         modelo.addAttribute("usuario", usuario);
         modelo.addAttribute("clave", clave);
         modelo.addAttribute("aficionesSeleccionadas", aficiones_seleccionadas);
@@ -72,38 +89,37 @@ public class PrincipalController extends Colecciones{
         modelo.addAttribute("musicasSeleccionadas", musicas_seleccionadas);
         modelo.addAttribute("comentarios", comentarios);
 
-        // Procesar el archivo
+        // Procesa y agrega el archivo al modelo si se ha enviado
         if (archivo != null && !archivo.isEmpty()) {
-            String nombreArchivo = archivo.getOriginalFilename();
-            modelo.addAttribute("nombreArchivo", nombreArchivo);
+            modelo.addAttribute("nombreArchivo", archivo);
         } else {
             modelo.addAttribute("nombreArchivo", "No se ha seleccionado ningún archivo");
         }
 
-        // Contar los parámetros recibidos (excluyendo los nulos)
+        // Cuenta los parámetros recibidos que no están vacíos o nulos
         int contadorParametrosRecibidos = 0;
-        if (usuario != null) contadorParametrosRecibidos++;
-        if (clave != null) contadorParametrosRecibidos++;
+        if (usuario != null && !usuario.equals(" ")) contadorParametrosRecibidos++;
+        if (clave != null && !clave.equals(" ")) contadorParametrosRecibidos++;
         if (aficiones_seleccionadas != null && !aficiones_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
         if (genero_seleccionado != null) contadorParametrosRecibidos++;
         if (pais_seleccionado != null) contadorParametrosRecibidos++;
         if (musicas_seleccionadas != null && !musicas_seleccionadas.isEmpty()) contadorParametrosRecibidos++;
-        if (comentarios != null) contadorParametrosRecibidos++;
-        if (archivo != null && !archivo.isEmpty()) contadorParametrosRecibidos++; // Contar archivo si fue enviado
+        if (comentarios != null && !comentarios.equals(" ")) contadorParametrosRecibidos++;
+        if (archivo != null && !archivo.isEmpty()) contadorParametrosRecibidos++;
 
+        // Agrega la cantidad de parámetros recibidos al modelo
         modelo.addAttribute("contadorParametrosRecibidos", contadorParametrosRecibidos);
-        modelo.addAttribute("titulo", "Repintado");
-        // Incrementar el contador de iteraciones
-        modelo.addAttribute("iteraciones", iteraciones + 1);
+        modelo.addAttribute("titulo", "Repintado"); // Cambia el título al repintar
+        modelo.addAttribute("iteraciones", iteraciones + 1); // Incrementa el contador de iteraciones
 
-        return "form"; // Asegúrate de que esta vista coincide con el nombre del archivo HTML
+        return "form"; // Retorna la misma vista para renderizar el formulario nuevamente
     }
 
-    //Redirigir las Solicitudes a favicon.ico a un Recurso Vacio
+    // Método para manejar solicitudes a favicon.ico y devolver una respuesta vacía
     @GetMapping("favicon.ico")
     @ResponseBody
     public void returnNoFavicon() {
-        // No hace nada, devuelve una respuesta vacía
+        // No hace nada; evita errores de solicitud de favicon
     }
 
 }
