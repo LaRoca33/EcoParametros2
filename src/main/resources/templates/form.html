@@ -10,19 +10,19 @@
     <p th:text="'Iteración: ' + ${iteraciones}"></p>
 <form method="post" action="recibe-parametros">
     <fieldset>
-        <legend>Formulario</legend>
-        <label for="nombre">Nombre:</label>
+        <legend th:text="#{etiqueta_form}"></legend>
+        <label for="usuario" th:text="#{etiqueta_usuario}"></label>
         <input type="text" id="usuario" name="usuario" th:value="${usuario}">
         <br><br>
 
         <!-- Campo de contraseña -->
-        <label for="contrasena">Contraseña:</label>
+        <label for="contrasena" th:text="#{etiqueta_clave}">Contraseña:</label>
         <input type="password" id="clave" name="clave" th:value="${clave}">
         <br><br>
         <input type="hidden" id="iteraciones" name="iteraciones" th:value="${iteraciones}">
 
         <!-- Botones de radio -->
-        <label>Género:</label>
+        <label th:text="#{etiqueta_genero}"></label>
         <input type="radio" id="masculino" name="genero_seleccionado"
                th:each="genero:${generos}"
                th:text="${genero.value}"
@@ -31,7 +31,7 @@
         <br><br>
 
         <!-- Casillas de verificación -->
-        <label>Aficiones:</label>
+        <label th:text="#{etiqueta_aficiones}"></label>
         <input type="checkbox" name="aficiones_seleccionadas"
                th:each="aficion:${aficiones}"
                th:text="${aficion.value}"
@@ -40,7 +40,7 @@
 
         <br><br>
 
-        <label for="pais">País:</label>
+        <label for="pais" th:text="#{etiqueta_pais}"></label>
         <select  name="pais_seleccionado" id="pais_seleccionado">
             <option th:each="pais:${paises}"
                     th:value="${pais.key}"
@@ -52,7 +52,7 @@
 
         <br><br>
 
-        <label for="musicas">Musicas:</label>
+        <label for="musicas" th:text="#{etiqueta_musica}"></label>
         <select multiple="multiple"  name="musicas_seleccionadas" id="musicas_seleccionadas">
             <option th:each="musica:${musicas}"
                     th:value="${musica.key}"
@@ -64,20 +64,26 @@
         <br><br>
 
         <!-- Campo de carga de archivo -->
-        <label for="archivo">Seleccionar archivo:</label>
+        <label for="archivo" th:text="#{etiqueta_archivo}"></label>
         <input type="file" id="archivo" name="archivo">
         <br>
         <span th:text="${nombreArchivo}">No se ha seleccionado ningún archivo</span>
 
         <br><br>
         <!-- Área de texto -->
-        <label for="comentarios">Comentarios:</label>
+        <label for="comentarios" th:text="#{etiqueta_comentarios}"></label>
         <textarea id="comentarios" name="comentarios" th:text="${comentarios}" rows="4" cols="50"></textarea>
         <br><br>
 
         <!-- Botón de envío -->
-        <input type="submit" value="Enviar">
-        <input type="reset" value="Reseteo">
+        <input type="submit" th:value="#{etiqueta_submit}">
+        <input type="reset" th:value="#{etiqueta_reset}">
+        <span th:text="#{idioma.selector}"></span>:
+        <select id="locales">
+            <option value=""></option>
+            <option value="en" th:text="#{idioma.ingles}"></option>
+            <option value="es" th:text="#{idioma.castellano}"></option>
+        </select>
         <br><br>
         <!-- Botón de tipo submit con imagen -->
         <button type="submit">
@@ -88,4 +94,12 @@
     <!-- Mostrar la cantidad de parámetros recibidos -->
         <p th:text="'Se han recibido ' + ${contadorParametrosRecibidos} + ' parámetros desde el formulario ' + ${titulo}"></p>
 </body>
+<script>
+    document.getElementById("locales").addEventListener("change", function () {
+        const selectedLang = this.value;
+        if (selectedLang) {
+            window.location.href = window.location.pathname + "?lang=" + selectedLang;
+        }
+    });
+</script>
 </html>
