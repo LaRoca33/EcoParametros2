@@ -47,13 +47,28 @@
         <input type="text" th:field="*{peso}">
 
         <br><br>
-        <!-- Casillas de verificación -->
-        <label th:text="#{etiqueta_aficiones}"></label>
-        <input type="checkbox" name="aficiones_seleccionadas"
-               th:each="aficion:${aficiones}"
-               th:text="${aficion.value}"
-               th:value="${aficion.key}"
-               th:field="*{aficionesSeleccionadas}">
+
+        <label for="prefijoTelefonico" th:text="#{etiqueta_prefijoTelefonico}"></label>
+        <select th:field="*{prefijoTelefonico}">
+            <option th:each="pais: ${paises}" th:text="${pais.value.getPrefijoTelefonicoPais()}"
+                    th:value="${pais.value.getPrefijoTelefonicoPais()}"
+                    th:selected="${pais.value.getPrefijoTelefonicoPais()}"></option>
+        </select>
+
+        <br><br>
+
+        <label for="telefono" th:text="#{etiqueta_telefono}"></label>
+        <input type="text" th:field="*{telefono}">
+
+        <br><br>
+
+        <label for="email" th:text="#{etiqueta_email}"></label>
+        <input type="text" th:field="*{email}">
+
+        <br><br>
+
+        <label for="url" th:text="#{etiqueta_URL}"></label>
+        <input type="text" th:field="*{url}">
 
         <br><br>
 
@@ -75,6 +90,17 @@
                     th:text="${musica.value}">
             </option>
         </select>
+
+        <br><br>
+
+        <!-- Casillas de verificación -->
+        <label th:text="#{etiqueta_aficiones}"></label>
+        <input type="checkbox" name="aficiones_seleccionadas"
+               th:each="aficion:${aficiones}"
+               th:text="${aficion.value}"
+               th:value="${aficion.key}"
+               th:field="*{aficionesSeleccionadas}">
+
         <br><br>
 
         <!-- Campo de carga de archivo -->
@@ -87,6 +113,12 @@
         <!-- Área de texto -->
         <label for="comentarios" th:text="#{etiqueta_comentarios}"></label>
         <textarea id="comentarios" th:field="*{comentarios}" rows="4" cols="50"></textarea>
+
+        <br><br>
+
+        <label for="licencia" th:text="#{etiqueta_licencia}"></label>
+        <input type="checkbox"  th:field="*{licencia}" ></input>
+
         <br><br>
 
         <!-- Botón de envío -->
@@ -108,12 +140,6 @@
     <!-- Mostrar la cantidad de parámetros recibidos -->
         <p th:text="'Se han recibido ' + ${contadorParametrosRecibidos} + ' parámetros desde el formulario ' + ${titulo}"></p>
 </body>
-<script>
-    document.getElementById("locales").addEventListener("change", function () {
-        const selectedLang = this.value;
-        if (selectedLang) {
-            window.location.href = window.location.pathname + "?lang=" + selectedLang;
-        }
-    });
+<script src="/js/funciones.js">
 </script>
 </html>
