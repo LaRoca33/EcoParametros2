@@ -18,9 +18,14 @@
         <!-- Campo de contraseña -->
         <label for="clave" th:text="#{etiqueta_clave}"></label>
         <input type="password"  th:field="*{clave}">
+
         <br><br>
+
         <label for="confirmarClave" th:text="#{etiqueta_confirmarClave}"></label>
         <input type="password"  th:field="*{confirmarClave}">
+
+        <input type="button" th:value="#{etiqueta_botonClaves}" onclick="botonClave()">
+
         <br><br>
         <input type="hidden" id="iteraciones" name="iteraciones" th:value="${iteraciones}">
 
@@ -31,6 +36,11 @@
                th:text="${genero.value}"
                th:value="${genero.key}"
                th:field="*{generoSeleccionado}">
+
+        <input type="button"
+                th:value="#{etiqueta_botonGeneros}"
+                th:onclick="|if (confirm('#{etiqueta_botonGenerosConfirmar}')) botonGeneros();|">
+
         <br><br>
 
         <label for="fechaNacimiento" th:text="#{etiqueta_fechaNacimiento}"></label>
@@ -91,15 +101,29 @@
             </option>
         </select>
 
+        <input type="button"
+                th:value="#{etiqueta_botonMusicasDes}"
+                th:onclick="|if (confirm('#{etiqueta_botonMusicasConfirmarDes}')) botonMusicasDes();|">
+        <input type="button"
+                th:value="#{etiqueta_botonMusicasSel}"
+                th:onclick="|if (confirm('#{etiqueta_botonMusicasConfirmarSel}')) botonMusicasSel();|">
+
         <br><br>
 
         <!-- Casillas de verificación -->
         <label th:text="#{etiqueta_aficiones}"></label>
-        <input type="checkbox" name="aficiones_seleccionadas"
+        <input type="checkbox"
                th:each="aficion:${aficiones}"
                th:text="${aficion.value}"
                th:value="${aficion.key}"
                th:field="*{aficionesSeleccionadas}">
+
+        <input type="button"
+               th:value="#{etiqueta_botonAficionesDes}"
+               th:onclick="|if (confirm('#{etiqueta_botonAficionesConfirmarDes}')) botonAficionesDes();|">
+        <input type="button"
+               th:value="#{etiqueta_botonAficionesSel}"
+               th:onclick="|if (confirm('#{etiqueta_botonAficionesConfirmarSel}')) botonAficionesSel();|">
 
         <br><br>
 
