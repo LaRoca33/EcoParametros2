@@ -1,9 +1,12 @@
 package org.aaroca.ecoparametros2.controller;
 
+import jakarta.validation.Valid;
 import org.aaroca.ecoparametros2.model.Colecciones;
 import org.aaroca.ecoparametros2.model.DatosFormulario;
+import org.aaroca.ecoparametros2.model.Pais;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +26,7 @@ public class PrincipalController extends Colecciones {
 
     // Carga un mapa de opciones de países en el modelo
     @ModelAttribute("paises")
-    private Map<String, String> devuelveListaPaises() {
+    private Map<String, Pais> devuelveListaPaises() {
         return Colecciones.getPaises();
     }
 
@@ -56,15 +59,43 @@ public class PrincipalController extends Colecciones {
     // Renderiza el formulario y carga valores por defecto en el modelo
     @GetMapping("devuelve-formulario")
     public String form(Model modelo) {
-        modelo.addAttribute("usuario", "Pepe"); // Valor inicial para el campo usuario
-        modelo.addAttribute("aficionesSeleccionadas", new ArrayList<>(Arrays.asList("D", "P", "V"))); // Valores iniciales de aficiones
-        modelo.addAttribute("paisSeleccionado", "F"); // Valor inicial para país
-        modelo.addAttribute("musicasSeleccionadas", new ArrayList<>(Arrays.asList("F", "R"))); // Valores iniciales de música
+        DatosFormulario formulario = new DatosFormulario();
+        formulario.setUsuario("Lola");
+        formulario.setPaisSeleccionado("pt");
+        formulario.setPrefijoTelefonico("33");
+        formulario.setMusicasSeleccionadas(Arrays.asList("F","R"));
+        formulario.setAficionesSeleccionadas(Arrays.asList("D","P","V"));
+        modelo.addAttribute("formulario", formulario);
         modelo.addAttribute("titulo", "Original"); // Texto inicial del título
         modelo.addAttribute("iteraciones", 1);  // Inicialización de contador de iteraciones
         return "form"; // Retorna la vista form.html para renderizar
     }
 
+    @PostMapping("recibe-parametros")
+    public String recibeParametrosObjeto( Model modelo ,@RequestParam(required = false, defaultValue = "1") int iteraciones
+            , @Valid @ModelAttribute("formulario") DatosFormulario formulario,
+                                          BindingResult result){
+
+        boolean errores=false;
+
+        if(result.hasErrors()){
+            errores=true;
+
+        }
+        modelo.addAttribute("titulo", "Repintado"); // Cambia el título al repintar
+        modelo.addAttribute("iteraciones", iteraciones + 1); // Incrementa el contador de iteraciones
+        modelo.addAttribute("errores", errores);
+
+        System.out.println("Repintando formulario");
+
+        return "form";
+    }
+
+
+
+
+
+/*
     // Recibe y procesa parámetros enviados desde el formulario
     @PostMapping("recibe-parametros")
     public String recibeParams(
@@ -114,6 +145,8 @@ public class PrincipalController extends Colecciones {
 
         return "form"; // Retorna la misma vista para renderizar el formulario nuevamente
     }
+
+ */
 
     // Método para manejar solicitudes a favicon.ico y devolver una respuesta vacía
     @GetMapping("favicon.ico")

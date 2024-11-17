@@ -8,16 +8,19 @@
     <h1 th:text="${titulo}"></h1> <!-- Título que muestra si es Original o Repintado -->
     <!-- Mostrar iteraciones -->
     <p th:text="'Iteración: ' + ${iteraciones}"></p>
-<form method="post" action="recibe-parametros">
+<form method="post" action="recibe-parametros" th:object="${formulario}">
     <fieldset>
         <legend th:text="#{etiqueta_form}"></legend>
         <label for="usuario" th:text="#{etiqueta_usuario}"></label>
-        <input type="text" id="usuario" name="usuario" th:value="${usuario}">
+        <input type="text" th:field="*{usuario}">
         <br><br>
 
         <!-- Campo de contraseña -->
-        <label for="contrasena" th:text="#{etiqueta_clave}">Contraseña:</label>
-        <input type="password" id="clave" name="clave" th:value="${clave}">
+        <label for="clave" th:text="#{etiqueta_clave}"></label>
+        <input type="password"  th:field="*{clave}">
+        <br><br>
+        <label for="confirmarClave" th:text="#{etiqueta_confirmarClave}"></label>
+        <input type="password"  th:field="*{confirmarClave}">
         <br><br>
         <input type="hidden" id="iteraciones" name="iteraciones" th:value="${iteraciones}">
 
@@ -27,25 +30,38 @@
                th:each="genero:${generos}"
                th:text="${genero.value}"
                th:value="${genero.key}"
-               th:checked="${genero.key == generoSeleccionado}">
+               th:field="*{generoSeleccionado}">
         <br><br>
 
+        <label for="fechaNacimiento" th:text="#{etiqueta_fechaNacimiento}"></label>
+        <input type="text" th:field="*{fechaNacimiento}">
+
+        <br><br>
+
+        <label for="edad" th:text="#{etiqueta_edad}"></label>
+        <input type="text" th:field="*{edad}">
+
+        <br><br>
+
+        <label for="peso" th:text="#{etiqueta_peso}"></label>
+        <input type="text" th:field="*{peso}">
+
+        <br><br>
         <!-- Casillas de verificación -->
         <label th:text="#{etiqueta_aficiones}"></label>
         <input type="checkbox" name="aficiones_seleccionadas"
                th:each="aficion:${aficiones}"
                th:text="${aficion.value}"
                th:value="${aficion.key}"
-               th:checked="${aficionesSeleccionadas != null && aficionesSeleccionadas.contains(aficion.key)}">
+               th:field="*{aficionesSeleccionadas}">
 
         <br><br>
 
         <label for="pais" th:text="#{etiqueta_pais}"></label>
-        <select  name="pais_seleccionado" id="pais_seleccionado">
+        <select  name="pais_seleccionado" th:field="*{paisSeleccionado}">
             <option th:each="pais:${paises}"
                     th:value="${pais.key}"
-                    th:text="${pais.value}"
-                    th:selected="${pais.key == paisSeleccionado}?selected">
+                    th:text="${pais.value.getPais()}">
 
             </option>
         </select>
@@ -53,12 +69,10 @@
         <br><br>
 
         <label for="musicas" th:text="#{etiqueta_musica}"></label>
-        <select multiple="multiple"  name="musicas_seleccionadas" id="musicas_seleccionadas">
+        <select multiple="multiple"  th:field="*{musicasSeleccionadas}">
             <option th:each="musica:${musicas}"
                     th:value="${musica.key}"
-                    th:text="${musica.value}"
-                    th:selected="${musicasSeleccionadas != null && musicasSeleccionadas.contains(musica.key)}">
-
+                    th:text="${musica.value}">
             </option>
         </select>
         <br><br>
@@ -72,7 +86,7 @@
         <br><br>
         <!-- Área de texto -->
         <label for="comentarios" th:text="#{etiqueta_comentarios}"></label>
-        <textarea id="comentarios" name="comentarios" th:text="${comentarios}" rows="4" cols="50"></textarea>
+        <textarea id="comentarios" th:field="*{comentarios}" rows="4" cols="50"></textarea>
         <br><br>
 
         <!-- Botón de envío -->
@@ -80,7 +94,7 @@
         <input type="reset" th:value="#{etiqueta_reset}">
         <span th:text="#{idioma.selector}"></span>:
         <select id="locales">
-            <option value=""></option>
+            <option value="" th:text="#{idioma.selector}"></option>
             <option value="en" th:text="#{idioma.ingles}"></option>
             <option value="es" th:text="#{idioma.castellano}"></option>
         </select>

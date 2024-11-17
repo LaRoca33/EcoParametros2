@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Colecciones {
 
     private static final HashMap<String, String> generos = new HashMap<>();
-    private static final HashMap<String, String> paises = new HashMap<>();
+    private static final HashMap<String, Pais> paises = new HashMap<>();
     private static final HashMap<String, String> musica = new HashMap<>();
     private static final HashMap<String, String> aficiones = new HashMap<>();
 
@@ -17,10 +17,11 @@ public class Colecciones {
         generos.put("O", "Otros");
 
 
-        paises.put("E", "España");
-        paises.put("F", "Francia");
-        paises.put("A", "Andorra");
-        paises.put("P", "Portugal");
+        paises.put("es", new Pais("España", "Castellano", "34", true,"espania.jpg"));
+        paises.put("fr", new Pais("Francia", "Francés", "33", false,"francia.jpg"));
+        paises.put("it", new Pais("Italia", "Italiano", "39", false,"italia.jpg"));
+        paises.put("pt", new Pais("Portugal", "Portugués", "351", false,"portugal.jpg"));
+        paises.put("en", new Pais("Reino unido", "Inglés", "44", true,"reino_unido.jpg"));
 
 
         musica.put("E", "Electrónica");
@@ -41,7 +42,7 @@ public class Colecciones {
         return generos;
     }
 
-    public static HashMap<String, String> getPaises() {
+    public static HashMap<String, Pais> getPaises() {
         return paises;
     }
 
