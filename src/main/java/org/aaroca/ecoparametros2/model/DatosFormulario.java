@@ -46,6 +46,7 @@ public class DatosFormulario {
     @NotNull
     private Integer edad;
     @NotNull
+    @ComprobarPeso(message = "{ComprobarPeso.DatosFormulario.peso}")
     private Float peso;
     @NotNull
     @ComprobarPrefijoTel(message = "{ComprobarPrefijoTel.DatosFormulario.prefijoTelefonico}")
