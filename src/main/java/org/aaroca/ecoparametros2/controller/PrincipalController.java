@@ -73,7 +73,9 @@ public class PrincipalController extends Colecciones {
 
         // Información de las cabeceras HTTP
         String direccionIp = request.getHeader("X-Forwarded-For");
-        // Intenta obtener la dirección IP del cliente desde la cabecera "X-Forwarded-For", que es usada por proxies.
+        // Intenta obtener la dirección IP del cliente desde la cabecera "X-Forwarded-For",
+        // hay un metodo específico para conseguir la IP del remoto o del cliente(getLocalAddr(),getRemoteAddr() ), pero estaba
+        // en formate IPv6 y no se veía realmete mi IP, por eso indague un poco más y encontre esto.
 
         if (direccionIp == null || direccionIp.isEmpty()) {
             // Verifica si la cabecera está vacía o no existe.

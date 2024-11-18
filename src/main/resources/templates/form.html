@@ -1,6 +1,16 @@
 
 <form th:fragment="formulario" method="post" action="recibe-parametros" th:object="${formulario}">
     <h1 th:text="${titulo}"></h1> <!-- Título que muestra si es Original o Repintado -->
+    <div th:if="${errores}">
+        <h3 class="error" th:text="#{aviso_errores}"></h3>
+    </div>
+    <div th:unless="${errores}">
+        <h3 class="allegri" th:text="#{aviso_sinErrores}"></h3>
+    </div>
+    <div th:if="${#fields.hasErrors('global')}">
+        <h3 th:text="#{aviso_erroresGlobales}"></h3>
+        <p th:each="error : ${#fields.errors('global')}" th:text="${error}" class="error" />
+    </div>
     <!-- Mostrar iteraciones -->
     <p th:text="'Iteración: ' + ${iteraciones}"></p>
     <fieldset>
