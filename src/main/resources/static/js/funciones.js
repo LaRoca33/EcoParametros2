@@ -52,3 +52,21 @@ function botonAficionesSel(){
         document.getElementsByName('aficionesSeleccionadas')[i].checked=true;
     }
 }
+
+function vaciado(){
+    for (let i=0; i< document.getElementsByName('aficionesSeleccionadas').length;i++){
+        document.getElementsByName('aficionesSeleccionadas')[i].checked=false;
+    }
+    let generoRadio = document.getElementsByName('generoSeleccionado');
+    for (let i = 0; i < generoRadio.length; i++) {
+        generoRadio[i].checked = false;
+    }
+    let selMusica = document.getElementById('musicasSeleccionadas');
+    for (let i = 0; i < selMusica.options.length; i++) {
+        selMusica.options[i].selected = false;
+    }
+    let textos = document.querySelectorAll("input[type='text'], input[type='password'], textarea");
+    textos.forEach(function(texto) {
+        texto.value = "";
+    });
+}

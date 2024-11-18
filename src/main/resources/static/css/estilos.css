@@ -1,0 +1,15 @@
+.error{
+    color: red;
+}
+.allegri{
+    color: #36c508;
+}
+.requiere::before{
+    content: "*";
+    color: red;
+}
+.especial::before{
+    content: "\1F892";
+    color: saddlebrown;
+
+}

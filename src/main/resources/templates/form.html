@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Formulario</title>
+    <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
     <h1 th:text="${titulo}"></h1> <!-- Título que muestra si es Original o Repintado -->
@@ -13,19 +14,22 @@
         <legend th:text="#{etiqueta_form}"></legend>
         <label for="usuario" th:text="#{etiqueta_usuario}"></label>
         <input type="text" th:field="*{usuario}">
+        <div th:errors="*{usuario}" class="error"></div>
         <br><br>
 
         <!-- Campo de contraseña -->
         <label for="clave" th:text="#{etiqueta_clave}"></label>
         <input type="password"  th:field="*{clave}">
+        <div th:errors="*{clave}" class="error"></div>
 
         <br><br>
 
         <label for="confirmarClave" th:text="#{etiqueta_confirmarClave}"></label>
         <input type="password"  th:field="*{confirmarClave}">
 
-        <input type="button" th:value="#{etiqueta_botonClaves}" onclick="botonClave()">
 
+        <input type="button" th:value="#{etiqueta_botonClaves}" onclick="botonClave()">
+        <div th:errors="*{confirmarClave}" class="error"></div>
         <br><br>
         <input type="hidden" id="iteraciones" name="iteraciones" th:value="${iteraciones}">
 
@@ -41,20 +45,25 @@
                 th:value="#{etiqueta_botonGeneros}"
                 th:onclick="|if (confirm('#{etiqueta_botonGenerosConfirmar}')) botonGeneros();|">
 
+        <div th:errors="*{generoSeleccionado}" class="error"></div>
+
         <br><br>
 
         <label for="fechaNacimiento" th:text="#{etiqueta_fechaNacimiento}"></label>
         <input type="text" th:field="*{fechaNacimiento}">
+        <div th:errors="*{fechaNacimiento}" class="error"></div>
 
         <br><br>
 
         <label for="edad" th:text="#{etiqueta_edad}"></label>
         <input type="text" th:field="*{edad}">
+        <div th:errors="*{edad}" class="error"></div>
 
         <br><br>
 
         <label for="peso" th:text="#{etiqueta_peso}"></label>
         <input type="text" th:field="*{peso}">
+        <div th:errors="*{peso}" class="error"></div>
 
         <br><br>
 
@@ -64,21 +73,25 @@
                     th:value="${pais.value.getPrefijoTelefonicoPais()}"
                     th:selected="${pais.value.getPrefijoTelefonicoPais()}"></option>
         </select>
+        <div th:errors="*{prefijoTelefonico}" class="error"></div>
 
         <br><br>
 
         <label for="telefono" th:text="#{etiqueta_telefono}"></label>
         <input type="text" th:field="*{telefono}">
+        <div th:errors="*{telefono}" class="error"></div>
 
         <br><br>
 
         <label for="email" th:text="#{etiqueta_email}"></label>
         <input type="text" th:field="*{email}">
+        <div th:errors="*{email}" class="error"></div>
 
         <br><br>
 
         <label for="url" th:text="#{etiqueta_URL}"></label>
         <input type="text" th:field="*{url}">
+        <div th:errors="*{url}" class="error"></div>
 
         <br><br>
 
@@ -90,6 +103,7 @@
 
             </option>
         </select>
+        <div th:errors="*{paisSeleccionado}" class="error"></div>
 
         <br><br>
 
@@ -100,6 +114,7 @@
                     th:text="${musica.value}">
             </option>
         </select>
+        <div th:errors="*{musicasSeleccionadas}" class="error"></div>
 
         <input type="button"
                 th:value="#{etiqueta_botonMusicasDes}"
@@ -117,6 +132,7 @@
                th:text="${aficion.value}"
                th:value="${aficion.key}"
                th:field="*{aficionesSeleccionadas}">
+        <div th:errors="*{aficionesSeleccionadas}" class="error"></div>
 
         <input type="button"
                th:value="#{etiqueta_botonAficionesDes}"
@@ -127,23 +143,30 @@
 
         <br><br>
 
-        <!-- Campo de carga de archivo -->
+        <!-- Campo de carga de archivo
         <label for="archivo" th:text="#{etiqueta_archivo}"></label>
         <input type="file" id="archivo" name="archivo">
         <br>
         <span th:text="${nombreArchivo}">No se ha seleccionado ningún archivo</span>
 
         <br><br>
+        -->
         <!-- Área de texto -->
         <label for="comentarios" th:text="#{etiqueta_comentarios}"></label>
-        <textarea id="comentarios" th:field="*{comentarios}" rows="4" cols="50"></textarea>
+        <textarea  th:field="*{comentarios}" rows="4" cols="50"></textarea>
+        <div th:errors="*{aficionesSeleccionadas}" class="error"></div>
 
         <br><br>
 
         <label for="licencia" th:text="#{etiqueta_licencia}"></label>
         <input type="checkbox"  th:field="*{licencia}" ></input>
+        <div th:errors="*{licencia}" class="error"></div>
 
-        <br><br>
+        <br>
+        <input type="button"
+               th:value="#{etiqueta_botonVaciado}"
+               th:onclick="|if (confirm('#{etiqueta_botonVaciadoConfirmarSel}')) vaciado();|">
+        <br>
 
         <!-- Botón de envío -->
         <input type="submit" th:value="#{etiqueta_submit}">
