@@ -11,5 +11,6 @@
 .especial::before{
     content: "\1F892";
     color: saddlebrown;
+    font-size: 25px;
 
 }

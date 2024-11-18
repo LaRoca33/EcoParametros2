@@ -1,30 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Formulario</title>
-    <link rel="stylesheet" href="/css/estilos.css">
-</head>
-<body>
+
+<form th:fragment="formulario" method="post" action="recibe-parametros" th:object="${formulario}">
     <h1 th:text="${titulo}"></h1> <!-- Título que muestra si es Original o Repintado -->
     <!-- Mostrar iteraciones -->
     <p th:text="'Iteración: ' + ${iteraciones}"></p>
-<form method="post" action="recibe-parametros" th:object="${formulario}">
     <fieldset>
         <legend th:text="#{etiqueta_form}"></legend>
-        <label for="usuario" th:text="#{etiqueta_usuario}"></label>
+        <label class="requiere" for="usuario" th:text="#{etiqueta_usuario}"></label>
         <input type="text" th:field="*{usuario}">
         <div th:errors="*{usuario}" class="error"></div>
         <br><br>
 
         <!-- Campo de contraseña -->
-        <label for="clave" th:text="#{etiqueta_clave}"></label>
+        <label class="requiere" for="clave" th:text="#{etiqueta_clave}"></label>
         <input type="password"  th:field="*{clave}">
         <div th:errors="*{clave}" class="error"></div>
 
         <br><br>
 
-        <label for="confirmarClave" th:text="#{etiqueta_confirmarClave}"></label>
+        <label class="requiere" for="confirmarClave" th:text="#{etiqueta_confirmarClave}"></label>
         <input type="password"  th:field="*{confirmarClave}">
 
 
@@ -34,7 +27,7 @@
         <input type="hidden" id="iteraciones" name="iteraciones" th:value="${iteraciones}">
 
         <!-- Botones de radio -->
-        <label th:text="#{etiqueta_genero}"></label>
+        <label class="requiere" th:text="#{etiqueta_genero}"></label>
         <input type="radio" id="masculino" name="genero_seleccionado"
                th:each="genero:${generos}"
                th:text="${genero.value}"
@@ -49,25 +42,25 @@
 
         <br><br>
 
-        <label for="fechaNacimiento" th:text="#{etiqueta_fechaNacimiento}"></label>
+        <label class="requiere" for="fechaNacimiento" th:text="#{etiqueta_fechaNacimiento}"></label>
         <input type="text" th:field="*{fechaNacimiento}">
         <div th:errors="*{fechaNacimiento}" class="error"></div>
 
         <br><br>
 
-        <label for="edad" th:text="#{etiqueta_edad}"></label>
+        <label class="especial" for="edad" th:text="#{etiqueta_edad}"></label>
         <input type="text" th:field="*{edad}">
         <div th:errors="*{edad}" class="error"></div>
 
         <br><br>
 
-        <label for="peso" th:text="#{etiqueta_peso}"></label>
+        <label class="requiere" for="peso" th:text="#{etiqueta_peso}"></label>
         <input type="text" th:field="*{peso}">
         <div th:errors="*{peso}" class="error"></div>
 
         <br><br>
 
-        <label for="prefijoTelefonico" th:text="#{etiqueta_prefijoTelefonico}"></label>
+        <label class="especial" for="prefijoTelefonico" th:text="#{etiqueta_prefijoTelefonico}"></label>
         <select th:field="*{prefijoTelefonico}">
             <option th:each="pais: ${paises}" th:text="${pais.value.getPrefijoTelefonicoPais()}"
                     th:value="${pais.value.getPrefijoTelefonicoPais()}"
@@ -77,13 +70,13 @@
 
         <br><br>
 
-        <label for="telefono" th:text="#{etiqueta_telefono}"></label>
+        <label class="especial" for="telefono" th:text="#{etiqueta_telefono}"></label>
         <input type="text" th:field="*{telefono}">
         <div th:errors="*{telefono}" class="error"></div>
 
         <br><br>
 
-        <label for="email" th:text="#{etiqueta_email}"></label>
+        <label class="especial" for="email" th:text="#{etiqueta_email}"></label>
         <input type="text" th:field="*{email}">
         <div th:errors="*{email}" class="error"></div>
 
@@ -95,7 +88,7 @@
 
         <br><br>
 
-        <label for="pais" th:text="#{etiqueta_pais}"></label>
+        <label class="requiere" for="pais" th:text="#{etiqueta_pais}"></label>
         <select  name="pais_seleccionado" th:field="*{paisSeleccionado}">
             <option th:each="pais:${paises}"
                     th:value="${pais.key}"
@@ -171,22 +164,12 @@
         <!-- Botón de envío -->
         <input type="submit" th:value="#{etiqueta_submit}">
         <input type="reset" th:value="#{etiqueta_reset}">
-        <span th:text="#{idioma.selector}"></span>:
-        <select id="locales">
-            <option value="" th:text="#{idioma.selector}"></option>
-            <option value="en" th:text="#{idioma.ingles}"></option>
-            <option value="es" th:text="#{idioma.castellano}"></option>
-        </select>
+
         <br><br>
         <!-- Botón de tipo submit con imagen -->
         <button type="submit">
             <input type="image" src="/img/Flecha_tesela.svg.png"  width="50" height="50">
         </button>
     </fieldset>
+    <p th:text="'Se han recibido ' + ${contadorParametrosRecibidos} + ' parámetros desde el formulario ' + ${titulo}"></p>
     </form>
-    <!-- Mostrar la cantidad de parámetros recibidos -->
-        <p th:text="'Se han recibido ' + ${contadorParametrosRecibidos} + ' parámetros desde el formulario ' + ${titulo}"></p>
-</body>
-<script src="/js/funciones.js">
-</script>
-</html>

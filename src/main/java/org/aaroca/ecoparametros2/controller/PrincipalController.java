@@ -68,7 +68,7 @@ public class PrincipalController extends Colecciones {
         modelo.addAttribute("formulario", formulario);
         modelo.addAttribute("titulo", "Original"); // Texto inicial del título
         modelo.addAttribute("iteraciones", 1);  // Inicialización de contador de iteraciones
-        return "form"; // Retorna la vista form.html para renderizar
+        return "formulario"; // Retorna la vista form.html para renderizar
     }
 
     @PostMapping("recibe-parametros")
@@ -88,7 +88,7 @@ public class PrincipalController extends Colecciones {
 
         System.out.println("Repintando formulario");
 
-        return "form";
+        return "formulario";
     }
 
 
