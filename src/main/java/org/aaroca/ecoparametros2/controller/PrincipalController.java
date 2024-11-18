@@ -142,7 +142,6 @@ public class PrincipalController extends Colecciones {
             else if (userAgent.contains("EdgeHTML")) motorRenderizado = "EdgeHTML";
             // Si contiene "EdgeHTML", el motor es EdgeHTML (usado en versiones antiguas de Microsoft Edge).
         }
-
         String idioma = request.getLocale().toString();
         // Obtiene el idioma y la configuración regional preferidos por el cliente.
 
