@@ -4,27 +4,27 @@
     <h3>SECCIÓN SUPERIOR</h3>
     <table border="1">
         <tr>
-            <td>Dirección IP del cliente HTTP:</td>
+            <td th:text="#{direccion}"></td>
             <td th:text="${direccionIp}">[dirección_ip]</td>
         </tr>
         <tr>
-            <td>Navegador usado en el cliente HTTP:</td>
+            <td th:text="#{navegator}"></td>
             <td th:text="${navegador}">[navegador]</td>
         </tr>
         <tr>
-            <td>Sistema operativo del equipo donde se ejecuta el navegador:</td>
+            <td th:text="#{so}"></td>
             <td th:text="${sistemaOperativo}">[sistema_operativo]</td>
         </tr>
         <tr>
-            <td>Motor de renderizado usado por el navegador:</td>
+            <td th:text="#{motor}"></td>
             <td th:text="${motorRenderizado}">[motor_renderizado]</td>
         </tr>
         <tr>
-            <td>Nombre de host solicitado por el cliente HTTP:</td>
+            <td th:text="#{host}"></td>
             <td th:text="${nombreHost}">[nombre_host]</td>
         </tr>
         <tr>
-            <td>Idioma y locale preferidos por el cliente HTTP:</td>
+            <td th:text="#{locale}"></td>
             <td th:text="${idioma}">[idioma]</td>
         </tr>
     </table>
